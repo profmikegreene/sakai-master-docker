@@ -1,23 +1,8 @@
 #!/bin/bash
-set -e
 
-# This creates a sakai.properties file for sakai based on the envrionment
-# Only create a sakai.properties if the values are set.
-if [[ -n "${MYSQL_DATABASE}" && -n "${MYSQL_USER}" && -n "${MYSQL_PASSWORD}" ]]; then
-	cat <<EOF  > /opt/tomcat/sakai/sakai.properties
-auto.ddl=true
-vendor@org.sakaiproject.db.api.SqlService=mysql
-driverClassName@javax.sql.BaseDataSource=com.mysql.jdbc.Driver
-hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
-validationQuery@javax.sql.BaseDataSource=select 1 from DUAL
-testOnBorrow@javax.sql.BaseDataSource=false
-defaultTransactionIsolationString@javax.sql.BaseDataSource=TRANSACTION_READ_COMMITTED
-url@javax.sql.BaseDataSource=jdbc:mysql://db:3306/${MYSQL_DATABASE}?characterEncoding=UTF-8&useServerPrepStmts=false&cachePrepStmts=true&prepStmtCacheSize=4096&prepStmtCacheSqlLimit=4096
-username@javax.sql.BaseDataSource=${MYSQL_USER}
-password@javax.sql.BaseDataSource=${MYSQL_PASSWORD}
+cp -a /usr/local/tomcat/sakailibs/. /usr/local/tomcat/libs/
 
-EOF
-fi
+
 
 
 # This is needed so that when using mounted volumes we can reset the permissions

@@ -14,7 +14,6 @@ services:
       - ./sakai/src/tomcat/components:/usr/local/tomcat/components
       - ./sakai/src/tomcat/endorsed:/usr/local/tomcat/endorsed
       - ./sakai/src/tomcat/sakai:/usr/local/tomcat/sakai
-     # - ./img-vol/tomcat/lib:/usr/local/tomcat/lib
     depends_on:
       - db
     networks:
@@ -48,15 +47,6 @@ services:
       - PMA_HOST=${MYSQL_HOST}
     networks:
       - sakainet
-  # maven:
-  #   build: ./maven
-  #   env_file: .env
-  #   environment:
-  #     - SAKAI_SOURCE=${SAKAI_SOURCE}
-  #   networks:
-  #     - sakainet
-  #   volumes:
-  #     - ./tomcat/src:/usr/src/app
 networks:
   sakainet:
     driver: bridge
