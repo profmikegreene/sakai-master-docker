@@ -37,3 +37,4 @@ In `startup.sh` change `git submodule add` to the appropriate git URL
 - delete sakai/Dockerfile, sakai/mvn-entrypoint.sh, sakai/settings-docker.xml if these aren't necessary
 - move sakai/src to sakai if no other files neccessary in that directory
 - do i need to push empty tomcat/components, tomcat/endorsed, tomcat/lib, tomcat/webapps, db/mysql to github?
+- remove submodule from repo as it's in install instructions
