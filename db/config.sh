@@ -1,0 +1,5 @@
+echo "============Initializing sakai database============"
+mysql -h localhost -u root -p${MYSQL_ROOT_PASSWORD} -e \
+"GRANT ALL ON ${MYSQL_DATABASE}.* TO ${MYSQL_USER}@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';
+GRANT ALL ON ${MYSQL_DATABASE}.* TO ${MYSQL_USER}@'127.0.0.1' IDENTIFIED BY '${MYSQL_PASSWORD}';
+GRANT ALL ON ${MYSQL_DATABASE}.* TO ${MYSQL_USER}@${DB_IP} IDENTIFIED BY '${MYSQL_PASSWORD}';"

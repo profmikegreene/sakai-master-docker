@@ -1,0 +1,65 @@
+version: '2'
+services:
+  tomcat:
+    build: ./tomcat
+    ports:
+      - ${TOMCAT_PORT}:8080
+    env_file: .env
+    volumes:
+      - ./sakai/src:/usr/local/bin/sakai
+      - ./sakai/target:/usr/local/tomcat/webapps
+      - ./tomcat/components:/usr/local/tomcat/components
+      - ./tomcat/endorsed:/usr/local/tomcat/endorsed
+      - ./tomcat/sakai:/usr/local/tomcat/sakai
+     # - ./img-vol/tomcat/lib:/usr/local/tomcat/lib
+    depends_on:
+      - db
+      - sakai
+    networks:
+      sakainet:
+        aliases:
+          - tomcat
+        ipv4_address: ${TOMCAT_IP}
+  db:
+    build: ./db
+    ports:
+      - 3636:3306
+    env_file: .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    volumes:
+      - ./db/mysql:/var/lib/mysql
+      - ./db/config.sh:/docker-entrypoint-initdb.d/config.sh
+    networks:
+      sakainet:
+        aliases:
+          - db
+        ipv4_address: ${DB_IP}
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - ${PMA_PORT}:80
+    environment:
+      - PMA_HOST=${MYSQL_HOST}
+    networks:
+      - sakainet
+  maven:
+    build: ./maven
+    env_file: .env
+    environment:
+      - SAKAI_SOURCE=${SAKAI_SOURCE}
+    networks:
+      - sakainet
+    volumes:
+      - ./tomcat/src:/usr/src/app
+networks:
+  sakainet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.239.0/24
+        gateway: 172.16.239.1

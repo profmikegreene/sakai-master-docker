@@ -1,0 +1,8 @@
+.DS_Store
+deploy/*
+sakai/src/*
+db/mysql/*
+tomcat/components/*
+tomcat/endorsed/*
+tomcat/lib/*
+tomcat/webapps/*
