@@ -10,7 +10,7 @@ Use `git clone https://github.com/profmikegreene/sakai-master-docker.git` to gra
 1. `cd sakai/src`
 1. `docker run -it --rm --name sakai -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven maven:3.5.2-jdk-8-alpine mvn clean install sakai:deploy -Dmaven.tomcat.home=../../tomcat -Djava.net.preferIPv4Stack=true -Dmaven.test.skip=true`
 
-    This will take a while, grab a coffee. But you don't need maven installed since it handles it all in the container :)
+    This will take a while, grab a coffee (took 58m). But you don't need maven installed since it handles it all in the container :)
 
 1. `docker-compose up`
 
@@ -37,4 +37,6 @@ In `startup.sh` change `git submodule add` to the appropriate git URL
 - delete sakai/Dockerfile, sakai/mvn-entrypoint.sh, sakai/settings-docker.xml if these aren't necessary
 - move sakai/src to sakai if no other files neccessary in that directory
 - do i need to push empty tomcat/components, tomcat/endorsed, tomcat/lib, tomcat/webapps, db/mysql to github?
-- remove submodule from repo as it's in install instructions
+- how to get the mvn install to deploy in tomcat directory to keep from having to mv/cp/keep duplicate deploys
+- how to restart tomcat without shutting container down?
+- is the tomcat startup hack working?

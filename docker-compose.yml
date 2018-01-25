@@ -5,6 +5,10 @@ services:
     ports:
       - ${TOMCAT_PORT}:8080
     env_file: .env
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
       - ./tomcat/webapps:/usr/local/tomcat/webapps
       - ./tomcat/components:/usr/local/tomcat/components

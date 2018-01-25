@@ -3,7 +3,7 @@ FROM tomcat:8.5.24-jre8-alpine
 #CATALINA_HOME to /usr/local/tomcat
 #JAVA_HOME to /usr/lib/jvm/java-1.8-openjdk/jre
 
-ENV JAVA_OPTS="-server -Xms512m -Xmx1024m -XX:NewSize=192m -XX:MaxNewSize=384m -Djava.awt.headless=true -Dhttp.agent=Sakai -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false -Dsun.lang.ClassLoader.allowArraySyntax=true -Djava.util.Arrays.useLegacyMergeSort=true -Dsakai.demo=true"
+ENV JAVA_OPTS="-server -Xms1024m -Xmx1024m -XX:NewSize=192m -XX:MaxNewSize=384m -Djava.awt.headless=true -Dhttp.agent=Sakai -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false -Dsun.lang.ClassLoader.allowArraySyntax=true -Djava.util.Arrays.useLegacyMergeSort=true -Dsakai.demo=true"
 ENV PATH="$CATALINA_HOME/bin:$PATH"
 
 RUN wget http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.36.tar.gz
@@ -20,6 +20,18 @@ RUN mkdir $CATALINA_HOME/sakai
 RUN mkdir $CATALINA_HOME/components
 RUN mkdir $CATALINA_HOME/endorsed
 
-COPY sakai/local.properties $CATALINA_HOME/sakai
+#COPY sakai/local.properties $CATALINA_HOME/sakai
 COPY lib/* $CATALINA_HOME/lib/
+COPY local.properties $CATALINA_HOME/sakai
 
+RUN echo $'auto.ddl=true\n\
+vendor@org.sakaiproject.db.api.SqlService=mysql\n\
+driverClassName@javax.sql.BaseDataSource=com.mysql.jdbc.Driver\n\
+hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect\n\
+validationQuery@javax.sql.BaseDataSource=select 1 from DUAL\n\
+testOnBorrow@javax.sql.BaseDataSource=false\n\
+defaultTransactionIsolationString@javax.sql.BaseDataSource=TRANSACTION_READ_COMMITTED\n\
+url@javax.sql.BaseDataSource=jdbc:mysql://db:3306/${MYSQL_DATABASE}?characterEncoding=UTF-8&useServerPrepStmts=false&cachePrepStmts=true&prepStmtCacheSize=4096&prepStmtCacheSqlLimit=4096\n\
+username@javax.sql.BaseDataSource=${MYSQL_USER}\n\
+password@javax.sql.BaseDataSource=${MYSQL_PASSWORD}\n'\
+>> $CATALINA_HOME/sakai/local.properties;
