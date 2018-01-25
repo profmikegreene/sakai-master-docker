@@ -17,14 +17,13 @@ COPY conf/context.xml $CATALINA_HOME/conf
 COPY conf/server.xml $CATALINA_HOME/conf
 
 RUN mkdir $CATALINA_HOME/sakai
-RUN mkdir $CATALINA_HOME/components
-RUN mkdir $CATALINA_HOME/endorsed
+#RUN mkdir $CATALINA_HOME/components
+#RUN mkdir $CATALINA_HOME/endorsed
 
 #COPY sakai/local.properties $CATALINA_HOME/sakai
-COPY lib/* $CATALINA_HOME/lib/
+#COPY lib/* $CATALINA_HOME/lib/
 COPY local.properties $CATALINA_HOME/sakai
 
-RUN echo $'\nurl@javax.sql.BaseDataSource=jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DATABASE}?characterEncoding=UTF-8&useServerPrepStmts=false&cachePrepStmts=true&prepStmtCacheSize=4096&prepStmtCacheSqlLimit=4096\n\
-username@javax.sql.BaseDataSource=${MYSQL_USER}\n\
-password@javax.sql.BaseDataSource=${MYSQL_PASSWORD}\n'\
->> $CATALINA_HOME/sakai/local.properties;
+
+RUN echo $'\nurl@javax.sql.BaseDataSource=jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DATABASE}?characterEncoding=UTF-8&useServerPrepStmts=false&cachePrepStmts=true&prepStmtCacheSize=4096&prepStmtCacheSqlLimit=4096\nusername@javax.sql.BaseDataSource=${MYSQL_USER}\npassword@javax.sql.BaseDataSource=${MYSQL_PASSWORD}\n'\
+>> $CATALINA_HOME/sakai/local.properties

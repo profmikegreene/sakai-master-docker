@@ -7,8 +7,9 @@ docker run -it --rm -e MAVEN_OPTS='-Xms2048m -Xmx4096m -Djava.util.Arrays.useLeg
        -v "$PWD/sakai/src":/usr/src/mymaven \
        -v "$PWD/sakai/.m2":/root/.m2 \
        -w /usr/src/mymaven \
-       maven:3.5.2-jdk-8 mvn clean install sakai:deploy \
+       maven:3.5.2-jdk-8 mvn clean install \
          -Dmaven.tomcat.home=/usr/src/mymaven/tomcat \
          -Djava.net.preferIPv4Stack=true \
-         -Dmaven.test.skip=true
+         -Dmaven.test.skip=true \
+         sakai:deploy
 docker-compose up

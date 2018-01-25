@@ -40,4 +40,4 @@ In `startup.sh` change `git submodule add` to the appropriate git URL
 - how to restart tomcat without shutting container down?
 - is the tomcat startup hack working?
 - database isn't getting populated
-- wtf is going on with local.properties not getting to the container?
+- wtf is going on with local.properties not getting to the container? does dockerfile:36 not copy the file to the server?
