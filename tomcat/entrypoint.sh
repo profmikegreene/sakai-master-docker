@@ -19,6 +19,8 @@ password@javax.sql.BaseDataSource=${MYSQL_PASSWORD}
 EOF
 fi
 
+[ "$(ls -A /usr/local/bin/sakai)" ] && git pull origin master /usr/local/bin/sakai || git clone https://github.com/sakaiproject/sakai.git /usr/local/bin/sakai
+
 # This is needed so that when using mounted volumes we can reset the permissions
 # In productions this should never be needed
 # if su sakai -c "test \! -w /opt/tomcat/sakai/files"  ; then 

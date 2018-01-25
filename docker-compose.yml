@@ -6,15 +6,13 @@ services:
       - ${TOMCAT_PORT}:8080
     env_file: .env
     volumes:
-      - ./sakai/src:/usr/local/bin/sakai
-      - ./sakai/target:/usr/local/tomcat/webapps
+      - ./tomcat/webapps:/usr/local/tomcat/webapps
       - ./tomcat/components:/usr/local/tomcat/components
       - ./tomcat/endorsed:/usr/local/tomcat/endorsed
       - ./tomcat/sakai:/usr/local/tomcat/sakai
      # - ./img-vol/tomcat/lib:/usr/local/tomcat/lib
     depends_on:
       - db
-      - sakai
     networks:
       sakainet:
         aliases:
@@ -46,15 +44,15 @@ services:
       - PMA_HOST=${MYSQL_HOST}
     networks:
       - sakainet
-  maven:
-    build: ./maven
-    env_file: .env
-    environment:
-      - SAKAI_SOURCE=${SAKAI_SOURCE}
-    networks:
-      - sakainet
-    volumes:
-      - ./tomcat/src:/usr/src/app
+  # maven:
+  #   build: ./maven
+  #   env_file: .env
+  #   environment:
+  #     - SAKAI_SOURCE=${SAKAI_SOURCE}
+  #   networks:
+  #     - sakainet
+  #   volumes:
+  #     - ./tomcat/src:/usr/src/app
 networks:
   sakainet:
     driver: bridge
