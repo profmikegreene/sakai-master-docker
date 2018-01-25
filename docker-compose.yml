@@ -10,10 +10,10 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
-      - ./tomcat/webapps:/usr/local/tomcat/webapps
-      - ./tomcat/components:/usr/local/tomcat/components
-      - ./tomcat/endorsed:/usr/local/tomcat/endorsed
-      - ./tomcat/sakai:/usr/local/tomcat/sakai
+      - ./sakai/src/tomcat/webapps:/usr/local/tomcat/webapps
+      - ./sakai/src/tomcat/components:/usr/local/tomcat/components
+      - ./sakai/src/tomcat/endorsed:/usr/local/tomcat/endorsed
+      - ./sakai/src/tomcat/sakai:/usr/local/tomcat/sakai
      # - ./img-vol/tomcat/lib:/usr/local/tomcat/lib
     depends_on:
       - db

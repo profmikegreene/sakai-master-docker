@@ -1,6 +1,8 @@
 .DS_Store
 deploy/*
+deploy/
 sakai/src/*
+sakai/.m2/*
 db/mysql/*
 tomcat/components/*
 tomcat/endorsed/*

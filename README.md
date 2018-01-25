@@ -34,9 +34,10 @@ In `startup.sh` change `git submodule add` to the appropriate git URL
 
 
 ### todo
-- delete sakai/Dockerfile, sakai/mvn-entrypoint.sh, sakai/settings-docker.xml if these aren't necessary
-- move sakai/src to sakai if no other files neccessary in that directory
+- delete sakai/Dockerfile, sakai/mvn-entrypoint.sh, sakai/settings-docker.xml, tomcat/entrypoint.sh if these aren't necessary
 - do i need to push empty tomcat/components, tomcat/endorsed, tomcat/lib, tomcat/webapps, db/mysql to github?
-- how to get the mvn install to deploy in tomcat directory to keep from having to mv/cp/keep duplicate deploys
+- i think this is done via docker-compose 13-16. how to get the mvn install to deploy in tomcat directory to keep from having to mv/cp/keep duplicate deploys
 - how to restart tomcat without shutting container down?
 - is the tomcat startup hack working?
+- database isn't getting populated
+- wtf is going on with local.properties not getting to the container?
