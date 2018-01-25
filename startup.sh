@@ -13,5 +13,6 @@ docker run -it --rm -e MAVEN_OPTS='-Xms2048m -Xmx6000m -Djava.util.Arrays.useLeg
          -Dmaven.test.skip=true \
          sakai:deploy
 cp -a sakai/src/tomcat/lib tomcat/lib
+ln -s tomcat/local.properties sakai/src/tomcat/sakai/local.properties
 docker-compose build --no-cache
 docker-compose up
