@@ -16,7 +16,7 @@ This creates a temporary container to do the maven build and starts containers f
 * mysql - to store sakai db
 * phpmyadmin - GUI for sakai db
 
-Visit [http://localhost:7777](http://localhost:7777) or whatever port you chose as `TOMCAT_PORT` in .env
+Visit [http://localhost:7777/portal](http://localhost:7777/portal) or whatever port you chose as `TOMCAT_PORT` in .env
 
 
 ### todo
