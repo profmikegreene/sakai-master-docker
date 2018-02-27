@@ -3,13 +3,11 @@ services:
   maven:
     build: ./sakai
     env_file: .env
-    # environment:
-    # command: mvn -f /usr/src/mymaven/master clean install
+    command: mvn -T 2C clean install sakai:deploy
     volumes:
-      - ./sakai/src:/usr/src/mymaven
+      - ./sakai/src:/usr/src/mymaven/src
+      - ./sakai/target:/usr/src/mymaven/target
       - ./sakai/.m2:/root/.m2
-    depends_on:
-      - db
     networks:
       sakainet:
         aliases:
