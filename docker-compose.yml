@@ -4,7 +4,7 @@ services:
     build:
       context: ./sakai
       args:
-        - SAKAI_BRANCH: ${SAKAI_BRANCH}
+        - SAKAI_BRANCH: "${SAKAI_BRANCH}"
     env_file: .env
     command: mvn -T 2C clean install sakai:deploy
     volumes:
