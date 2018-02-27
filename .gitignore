@@ -2,6 +2,16 @@
 deploy/*
 deploy/
 sakai/src/*
+sakai/target/components/*
+sakai/target/endorsed/*
+sakai/target/lib/*
+sakai/target/sakai/*
+sakai/target/webapps/*
+!sakai/target/components
+!sakai/target/endorsed
+!sakai/target/lib
+!sakai/target/sakai
+!sakai/target/webapps
 sakai/.m2/*
 db/mysql/*
 tomcat/components/*
