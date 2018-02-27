@@ -2,7 +2,8 @@
 docker build ./sakai
 
 docker run -it --rm --name sakai-maven \
-       -v "$PWD/sakai/src":/usr/src/mymaven \
+       -v "$PWD/sakai/src":/usr/src/mymaven/src \
+       -v "$PWD/sakai/target":/usr/src/mymaven/target \
        -v "$PWD/sakai/.m2":/root/.m2 \
        DOCKERIMAGEID mvn -T 2C clean install sakai:deploy
 
