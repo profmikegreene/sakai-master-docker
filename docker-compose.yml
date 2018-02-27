@@ -1,12 +1,9 @@
 version: '2'
 services:
   maven:
-    build:
-      context: ./sakai
-      args:
-        SAKAI_BRANCH: "11.x"
+    build: ./maven
     env_file: .env
-    command: mvn -T 2C clean install sakai:deploy
+    command: mvn -T 2C -f src clean install sakai:deploy
     volumes:
       - ./sakai/src:/usr/src/mymaven/src
       - ./sakai/target:/usr/src/mymaven/target

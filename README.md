@@ -2,9 +2,14 @@
 
 ## Install
 
-Use `git clone https://github.com/profmikegreene/sakai-master-docker.git` to grab this repository. 
+`git clone https://github.com/profmikegreene/sakai-master-docker.git` to grab this repository. 
 
-You can then `cd` to the folder you cloned into and either `bash startup.sh` or run the individual commands manually.
+`cd` to the folder you cloned into 
+
+`git clone -b 11.x https://github.com/sakaiproject/sakai.git sakai/src`
+
+
+
 
 You may want to adjust the CPU/RAM you give Docker and the variables in startup.sh:5 and tomcat/Dockerfile:6 if you have more or less resources to devote to the build. The defaults can consume up to 6GB of RAM and 4 CPUs.
 
