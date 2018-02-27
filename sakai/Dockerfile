@@ -6,4 +6,5 @@ ENV MAVEN_OPTS="$MAVEN_OPTS  -Djava.net.preferIPv4Stack=true"
 ENV MAVEN_OPTS="$MAVEN_OPTS -Dmaven.test.skip=true"
 WORKDIR /usr/src/mymaven
 
+ARG SAKAI_BRANCH
 RUN git clone -b $SAKAI_BRANCH https://github.com/sakaiproject/sakai.git
