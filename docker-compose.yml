@@ -5,9 +5,9 @@ services:
     env_file: .env
     command: mvn -T 2C -f src clean install sakai:deploy
     volumes:
-      - ./sakai/src:/usr/src/mymaven/src
-      - ./sakai/target:/usr/src/mymaven/target
-      - ./sakai/.m2:/root/.m2
+      - ./maven/src:/usr/src/mymaven/src
+      - ./maven/target:/usr/src/mymaven/target
+      - ./maven/.m2:/root/.m2
     networks:
       sakainet:
         aliases:

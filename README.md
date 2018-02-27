@@ -6,7 +6,7 @@
 
 `cd` to the folder you cloned into 
 
-`git clone -b 11.x https://github.com/sakaiproject/sakai.git sakai/src`
+`git clone -b 11.x --depth 1 https://github.com/sakaiproject/sakai.git maven/src`
 
 
 
