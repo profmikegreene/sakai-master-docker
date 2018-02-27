@@ -1,4 +1,4 @@
-# Sakai Master Dockerized
+# Sakai Github Dockerized
 
 ## Install
 
@@ -22,3 +22,10 @@ Visit [http://localhost:7777/portal](http://localhost:7777/portal) or whatever p
 ### todo
 - how to restart tomcat without shutting container down if you want to dev and redeploy?
 
+
+You `git` outside of docker
+
+Sakai docker what if it came pre-built it was more about demo than master you can use tags or environmental variables to choose the branch but if you want the latest you’re going to have to rebuild it. That should speed up the deploy for new people
+
+Take properties from nightly
+https://codefresh.io/docker-tutorial/node_docker_multistage/?utm_medium=twitter-ad&utm_campaign=Twitter-Blog-Multi-stage&utm_source=twitter&utm_content=ad-3 Would this work?

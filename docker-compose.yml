@@ -1,5 +1,20 @@
 version: '2'
 services:
+  maven:
+    build: ./sakai
+    env_file: .env
+    # environment:
+    # command: mvn -f /usr/src/mymaven/master clean install
+    volumes:
+      - ./sakai/src:/usr/src/mymaven
+      - ./sakai/.m2:/root/.m2
+    depends_on:
+      - db
+    networks:
+      sakainet:
+        aliases:
+          - maven
+        # ipv4_address: ${MAVEN_IP}
   tomcat:
     build: ./tomcat
     ports:
@@ -10,17 +25,19 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
-      - ./sakai/src/tomcat/webapps:/usr/local/tomcat/webapps
-      - ./sakai/src/tomcat/components:/usr/local/tomcat/components
-      - ./sakai/src/tomcat/endorsed:/usr/local/tomcat/endorsed
-      - ./sakai/src/tomcat/sakai:/usr/local/tomcat/sakai
+      - ./sakai/target/webapps:/usr/local/tomcat/webapps
+      - ./sakai/target/components:/usr/local/tomcat/components
+      - ./sakai/target/endorsed:/usr/local/tomcat/endorsed
+      - ./sakai/target/sakai:/usr/local/tomcat/sakai
+      - ./sakai/target/lib:/usr/local/tomcat/lib
     depends_on:
       - db
+      - maven
     networks:
       sakainet:
         aliases:
           - tomcat
-        ipv4_address: ${TOMCAT_IP}
+        # ipv4_address: ${TOMCAT_IP}
   db:
     build: ./db
     ports:
@@ -38,7 +55,7 @@ services:
       sakainet:
         aliases:
           - db
-        ipv4_address: ${DB_IP}
+        # ipv4_address: ${DB_IP}
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
@@ -52,6 +69,6 @@ networks:
     driver: bridge
     ipam:
       driver: default
-      config:
-      - subnet: 172.16.239.0/24
-        gateway: 172.16.239.1
+      # config:
+      # - subnet: 172.16.239.0/24
+        # gateway: 172.16.239.1
