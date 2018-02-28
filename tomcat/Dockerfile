@@ -1,4 +1,4 @@
-FROM tomcat:8.5.24-jre8-alpine
+FROM tomcat:8.5-jre8-alpine
 #this image sets
 #CATALINA_HOME to /usr/local/tomcat
 #JAVA_HOME to /usr/lib/jvm/java-1.8-openjdk/jre
@@ -26,3 +26,6 @@ COPY conf/context.xml $CATALINA_HOME/conf
 COPY conf/server.xml $CATALINA_HOME/conf
 
 #COPY lib/* $CATALINA_HOME/lib/
+#
+
+#COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh

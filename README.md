@@ -8,7 +8,7 @@
 
 `git clone -b 11.x --depth 1 https://github.com/sakaiproject/sakai.git maven/src`
 
-
+`docker-compose up`
 
 
 You may want to adjust the CPU/RAM you give Docker and the variables in startup.sh:5 and tomcat/Dockerfile:6 if you have more or less resources to devote to the build. The defaults can consume up to 6GB of RAM and 4 CPUs.
@@ -34,3 +34,7 @@ Sakai docker what if it came pre-built it was more about demo than master you ca
 
 Take properties from nightly
 https://codefresh.io/docker-tutorial/node_docker_multistage/?utm_medium=twitter-ad&utm_campaign=Twitter-Blog-Multi-stage&utm_source=twitter&utm_content=ad-3 Would this work?
+
+Use a multistage build to merge maven and tomcat together? 
+- I like having them separated because you could run maven commands independantly.
+- perhaps it would be better to put them on the same image and then you could alias mvn clean install sakai:deploy to include a tomcat restart?

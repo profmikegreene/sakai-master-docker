@@ -27,7 +27,8 @@ services:
       - ./sakai/target/components:/usr/local/tomcat/components
       - ./sakai/target/endorsed:/usr/local/tomcat/endorsed
       - ./sakai/target/sakai:/usr/local/tomcat/sakai
-      - ./sakai/target/lib:/usr/local/tomcat/lib
+      # - ./sakai/target/lib:/usr/local/tomcat/lib
+    command: ["./wait-for-it.sh", "db:${MYSQL_PORT}", "--"]
     depends_on:
       - db
       - maven
@@ -39,7 +40,7 @@ services:
   db:
     build: ./db
     ports:
-      - 3636:3306
+      - ${MYSQL_PORT}:3306
     env_file: .env
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
