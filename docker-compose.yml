@@ -28,7 +28,7 @@ services:
       - ./sakai/target/endorsed:/usr/local/tomcat/endorsed
       - ./sakai/target/sakai:/usr/local/tomcat/sakai
       # - ./sakai/target/lib:/usr/local/tomcat/lib
-    command: ["./wait-for-it.sh", "db:${MYSQL_PORT}", "--"]
+    command: ["/usr/local/bin/wait-for-it.sh", "db:${MYSQL_PORT}", "--"]
     depends_on:
       - db
       - maven

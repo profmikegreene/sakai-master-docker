@@ -28,4 +28,4 @@ COPY conf/server.xml $CATALINA_HOME/conf
 #COPY lib/* $CATALINA_HOME/lib/
 #
 
-#COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
+COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
