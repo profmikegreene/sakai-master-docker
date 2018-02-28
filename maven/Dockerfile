@@ -5,7 +5,7 @@ ENV MAVEN_OPTS="$MAVEN_OPTS -Dsakai.home=/usr/src/mymaven/target/target/sakai"
 ENV MAVEN_OPTS="$MAVEN_OPTS  -Djava.net.preferIPv4Stack=true"
 ENV MAVEN_OPTS="$MAVEN_OPTS -Dmaven.test.skip=true"
 WORKDIR /usr/src/mymaven
-RUN mkdir target/components target/endorsed target/lib target/webapps
+
 
 #lines for download binaries from http://source.sakaiproject.org/
 #extracting and putting them in right place

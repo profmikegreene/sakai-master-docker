@@ -7,6 +7,8 @@ sakai/src/*
 sakai/.m2/*
 maven/src/*
 maven/.m2/*
+maven/target/*
+!maven/target/sakai
 db/mysql/*
 tomcat/components/*
 tomcat/endorsed/*
