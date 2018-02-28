@@ -1,6 +1,8 @@
 .DS_Store
 deploy/*
 deploy/
+ignore/
+ignore/*
 sakai/src/*
 sakai/.m2/*
 maven/src/*

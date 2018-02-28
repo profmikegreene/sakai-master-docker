@@ -27,7 +27,7 @@ Visit [http://localhost:7777/portal](http://localhost:7777/portal) or whatever p
 ### todo
 - how to restart tomcat without shutting container down if you want to dev and redeploy?
 
-
+### blah
 You `git` outside of docker
 
 Sakai docker what if it came pre-built it was more about demo than master you can use tags or environmental variables to choose the branch but if you want the latest you’re going to have to rebuild it. That should speed up the deploy for new people
@@ -38,3 +38,7 @@ https://codefresh.io/docker-tutorial/node_docker_multistage/?utm_medium=twitter-
 Use a multistage build to merge maven and tomcat together? 
 - I like having them separated because you could run maven commands independantly.
 - perhaps it would be better to put them on the same image and then you could alias mvn clean install sakai:deploy to include a tomcat restart?
+
+
+ignore/src contains a sakaiproject/sakai git clone
+ignore/sakai-bin-11.4 contains source.sakaiproject.org binaries
