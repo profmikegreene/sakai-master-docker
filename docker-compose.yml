@@ -1,17 +1,17 @@
 version: '2'
 services:
-  maven:
-    build: ./maven
-    env_file: .env
-    command: mvn -T 2C -f src clean install sakai:deploy
-    volumes:
-      - ./maven/src:/usr/src/mymaven/src
-      - ./maven/target:/usr/src/mymaven/target
-      - ./maven/.m2:/root/.m2
-    networks:
-      sakainet:
-        aliases:
-          - maven
+  # maven:
+  #   build: ./maven
+  #   env_file: .env
+  #   command: mvn -T 2C -f src clean install sakai:deploy
+  #   volumes:
+  #     - ./maven/src:/usr/src/mymaven/src
+  #     - ./maven/target:/usr/src/mymaven/target
+  #     - ./maven/.m2:/root/.m2
+  #   networks:
+  #     sakai.local:
+  #       aliases:
+  #         - maven.sakai.local
         # ipv4_address: ${MAVEN_IP}
   tomcat:
     build: ./tomcat
@@ -23,20 +23,20 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
-      - ./sakai/target/webapps:/usr/local/tomcat/webapps
-      - ./sakai/target/components:/usr/local/tomcat/components
-      - ./sakai/target/endorsed:/usr/local/tomcat/endorsed
-      - ./sakai/target/sakai:/usr/local/tomcat/sakai
-      # - ./sakai/target/lib:/usr/local/tomcat/lib
-    command: ["/usr/local/bin/wait-for-it.sh", "db:${MYSQL_PORT}", "--"]
+      - ./maven/target/webapps:/usr/local/tomcat/webapps
+      - ./maven/target/components:/usr/local/tomcat/components
+      - ./maven/target/endorsed:/usr/local/tomcat/endorsed
+      - ./maven/target/sakai:/usr/local/tomcat/sakai
+      - ./maven/target/lib:/usr/local/tomcat/sakai/lib
+    command: ["/usr/local/bin/wait-for-it.sh", "${MYSQL_HOST}:${MYSQL_PORT}", "--", "/usr/local/bin/appstart.sh"]
     depends_on:
       - db
-      - maven
+      # - maven
     networks:
-      sakainet:
+      sakai.local:
         aliases:
-          - tomcat
-        # ipv4_address: ${TOMCAT_IP}
+          - tomcat.sakai.local
+        ipv4_address: ${TOMCAT_IP}
   db:
     build: ./db
     ports:
@@ -51,10 +51,10 @@ services:
       - ./db/mysql:/var/lib/mysql
       - ./db/config.sh:/docker-entrypoint-initdb.d/config.sh
     networks:
-      sakainet:
+      sakai.local:
         aliases:
-          - db
-        # ipv4_address: ${DB_IP}
+          - db.sakai.local
+        ipv4_address: ${DB_IP}
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
@@ -62,12 +62,14 @@ services:
     environment:
       - PMA_HOST=${MYSQL_HOST}
     networks:
-      - sakainet
+      sakai.local:
+        aliases:
+          - pma.sakai.local
 networks:
-  sakainet:
+  sakai.local:
     driver: bridge
     ipam:
       driver: default
-      # config:
-      # - subnet: 172.16.239.0/24
-        # gateway: 172.16.239.1
+      config:
+      - subnet: 172.16.239.0/24
+        gateway: 172.16.239.1

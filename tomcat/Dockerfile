@@ -1,9 +1,9 @@
-FROM tomcat:8.5-jre8-alpine
+FROM tomcat:8.0-jre8-alpine
 #this image sets
 #CATALINA_HOME to /usr/local/tomcat
 #JAVA_HOME to /usr/lib/jvm/java-1.8-openjdk/jre
 
-ENV JAVA_OPTS="-server -Xms1024m -Xmx2048m -XX:NewSize=192m -XX:MaxNewSize=384m"
+ENV JAVA_OPTS="-server -d64 -Xms1024m -Xmx2048m -XX:NewSize=192m -XX:MaxNewSize=384m"
 ENV JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true"
 ENV JAVA_OPTS="$JAVA_OPTS -Dhttp.agent=Sakai"
 ENV JAVA_OPTS="$JAVA_OPTS -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false"
@@ -13,6 +13,15 @@ ENV JAVA_OPTS="$JAVA_OPTS -Dsakai.demo=true"
 ENV JAVA_OPTS="$JAVA_OPTS -XX:+UseCompressedOops"
 ENV JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC"
 ENV JAVA_OPTS="$JAVA_OPTS -XX:+DisableExplicitGC"
+ENV JAVA_OPTS="$JAVA_OPTS -Dsakai.security=$CATALINA_HOME/sakai/"
+ENV JAVA_OPTS="$JAVA_OPTS -Duser.timezone=US/Eastern"
+ENV JAVA_OPTS="$JAVA_OPTS -Dsakai.cookieName=SAKAI2SESSIONID"
+ENV JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote"
+ENV JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.port=8089"
+ENV JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.local.only=false"
+ENV JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.authenticate=false"
+ENV JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.ssl=false"
+
 ENV PATH="$CATALINA_HOME/bin:$PATH"
 
 RUN wget http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.36.tar.gz
@@ -26,6 +35,6 @@ COPY conf/context.xml $CATALINA_HOME/conf
 COPY conf/server.xml $CATALINA_HOME/conf
 
 #COPY lib/* $CATALINA_HOME/lib/
-#
 
+COPY ./appstart.sh /usr/local/bin/appstart.sh
 COPY ./wait-for-it.sh /usr/local/bin/wait-for-it.sh

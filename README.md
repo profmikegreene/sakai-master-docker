@@ -6,7 +6,7 @@
 
 `cd` to the folder you cloned into 
 
-`git clone -b 11.x --depth 1 https://github.com/sakaiproject/sakai.git maven/src`
+`git clone -b 11.x https://github.com/sakaiproject/sakai.git maven/src`
 
 `docker-compose up`
 
@@ -21,7 +21,7 @@ This creates a temporary container to do the maven build and starts containers f
 * mysql - to store sakai db
 * phpmyadmin - GUI for sakai db
 
-Visit [http://localhost:7777/portal](http://localhost:7777/portal) or whatever port you chose as `TOMCAT_PORT` in .env
+Visit [http://localhost/portal](http://localhost/portal) or whatever port you chose as `TOMCAT_PORT` in .env
 
 
 ### todo
@@ -42,3 +42,5 @@ Use a multistage build to merge maven and tomcat together?
 
 ignore/src contains a sakaiproject/sakai git clone
 ignore/sakai-bin-11.4 contains source.sakaiproject.org binaries
+
+what does maven/target/lib look like after a sakai:deploy? Do any of the original binaries remain unchanged?
