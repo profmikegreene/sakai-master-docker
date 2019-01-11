@@ -1,25 +1,46 @@
-
-docker build ./sakai
-
-docker run -it --rm --name sakai-maven \
-       -v "$PWD/sakai/src":/usr/src/mymaven/src \
-       -v "$PWD/sakai/target":/usr/src/mymaven/target \
-       -v "$PWD/sakai/.m2":/root/.m2 \
-       DOCKERIMAGEID mvn -T 2C clean install sakai:deploy
-
-
-cp -a sakai/src/tomcat/lib tomcat/lib
-ln -s tomcat/local.properties sakai/src/tomcat/sakai/local.properties
+echo "====== Building Docker Images ======"
+# if you're having trouble try using --no-cache
 docker-compose build --no-cache
+#docker-compose build
+
+echo "====== Cloning sakaiproject/sakai ======"
+# Select the fork/branch you wish to clone. Defaults to master.
+#git clone -b 11.x https://github.com/sakaiproject/sakai.git maven/src
+#git clone -b 12.x https://github.com/sakaiproject/sakai.git maven/src
+git clone https://github.com/sakaiproject/sakai.git maven/src
+
+echo "====== Building Sakai ======"
+docker run -it --rm --name sakai-maven \
+  -v "$PWD/maven/src":/usr/src/mymaven/src \
+  -v "$PWD/maven/target":/usr/src/mymaven/target \
+  -v "$PWD/maven/.m2":/root/.m2 \
+  sakaimasterdocker_maven mvn -T 2C \
+  -f src \
+  clean install
+
+echo "====== Deploying Sakai ======"
+docker run -it --rm --name sakai-maven \
+  -v "$PWD/maven/src":/usr/src/mymaven/src \
+  -v "$PWD/maven/target":/usr/src/mymaven/target \
+  -v "$PWD/maven/.m2":/root/.m2 \
+  sakaimasterdocker_maven mvn -T 2C \
+  -f src \
+  sakai:deploy
+
+echo "====== Building duke-default skin ======"
+docker run -it --rm --name sakai-maven \
+  -v "$PWD/maven/src":/usr/src/mymaven/src \
+  -v "$PWD/maven/target":/usr/src/mymaven/target \
+  -v "$PWD/maven/.m2":/root/.m2 \
+  sakaimasterdocker_maven mvn \
+  -f src/library \
+  clean install \
+  -Pcompile-skin \
+  -Dsakai.skin.source=duke-default \
+  -Dsakai.skin.target=duke-default \
+  sakai:deploy
+
+echo "====== Starting Docker Compose ======"
 docker-compose up
 
 
-docker run -it --rm --name sakai-maven \
--v "$PWD/maven/src":/usr/src/mymaven/src \
--v "$PWD/maven/target":/usr/src/mymaven/target \
--v "$PWD/maven/.m2":/root/.m2 \
-maven.sakai.local_1 mvn -T 2C \
--f src/reference/library \
-clean install \
--Pcompile-skin -Dsakai.skin.target=duke-default \
-sakai:deploy

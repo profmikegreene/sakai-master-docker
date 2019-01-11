@@ -9,7 +9,7 @@ maven/src/*
 maven/.m2/*
 maven/target/*
 !maven/target/sakai/local.properties
-db/mysql/*
+mysql/mysql/*
 tomcat/components/*
 tomcat/endorsed/*
 tomcat/lib/*

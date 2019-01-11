@@ -2,14 +2,16 @@
 
 ## Install
 
-`git clone https://github.com/profmikegreene/sakai-master-docker.git` to grab this repository. 
+`git clone https://github.com/profmikegreene/sakai-master-docker.git` to grab this repository.
 
-`cd` to the folder you cloned into 
+`cd` to the folder you cloned into.
 
-`git clone -b 11.x https://github.com/sakaiproject/sakai.git maven/src`
+Run the startup.sh script or run the commands individually
+`bash startup.sh`
 
-`docker-compose up`
+Note: If you cloned this directory under a different name, the startup.sh script won't work as the docker commands use sakaimasterdocker as the root image name. Review startup.sh if you receive docker image not found errors.
 
+Note: On `docker-compose up` you will get a maven build failure. I do not know how to prevent maven from starting on docker-compose up while still being built for all the previous builds.
 
 You may want to adjust the CPU/RAM you give Docker and the variables in startup.sh:5 and tomcat/Dockerfile:6 if you have more or less resources to devote to the build. The defaults can consume up to 6GB of RAM and 4 CPUs.
 
@@ -17,11 +19,11 @@ This will take a while (mine took 62m), grab a coffee.
 
 This creates a temporary container to do the maven build and starts containers for
 
-* tomcat - to serve the built sakai 
+* tomcat - to serve the built sakai
 * mysql - to store sakai db
 * phpmyadmin - GUI for sakai db
 
-Visit [http://localhost/portal](http://localhost/portal) or whatever port you chose as `TOMCAT_PORT` in .env
+Visit [http://localhost/portal](http://localhost/portal) or whatever localhost:port/portal if you chose another port as `TOMCAT_PORT` in .env
 
 
 ### todo
@@ -41,6 +43,5 @@ Use a multistage build to merge maven and tomcat together?
 
 
 ignore/src contains a sakaiproject/sakai git clone
-ignore/sakai-bin-11.4 contains source.sakaiproject.org binaries
 
 what does maven/target/lib look like after a sakai:deploy? Do any of the original binaries remain unchanged?

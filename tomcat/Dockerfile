@@ -1,4 +1,4 @@
-FROM tomcat:8.0-jre8-alpine
+FROM tomcat:8.0-jre8
 #this image sets
 #CATALINA_HOME to /usr/local/tomcat
 #JAVA_HOME to /usr/lib/jvm/java-1.8-openjdk/jre
@@ -31,10 +31,13 @@ RUN mv mysql-connector-java-5.1.36/mysql-connector-java-5.1.36-bin.jar $CATALINA
 RUN rm mysql-connector-java-5.1.36.tar.gz
 RUN rm -rf mysql-connector-java-5.1.36
 
+RUN apt-get update && apt-get install -y mysql-client
+
 COPY conf/context.xml $CATALINA_HOME/conf
 COPY conf/server.xml $CATALINA_HOME/conf
 
-#COPY lib/* $CATALINA_HOME/lib/
-
 COPY ./appstart.sh /usr/local/bin/appstart.sh
-COPY ./wait-for-it.sh /usr/local/bin/wait-for-it.sh
+RUN chmod u+x /usr/local/bin/appstart.sh
+
+ENTRYPOINT ["/usr/local/bin/appstart.sh"]
+CMD ["catalina.sh", "run"]
